@@ -137,14 +137,5 @@ void deleteByValue(cell* queue, int elem_value, QUEUE_ERR *err)
     return;
 }
 
-int main() 
-{
-    QUEUE_ERR err = -1;
-    cell (*queue) = (cell*)malloc(sizeof(cell) * MAXSIZE);
-    
-    
 
-
-    return 0;
-}
 
