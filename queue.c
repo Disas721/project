@@ -1,4 +1,4 @@
-#include <queue.h>
+#include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -14,11 +14,14 @@ void swap(cell *elem1, cell *elem2) {
 
 void show(cell *queue) 
 {
-    printf("-----\nQueue: ");
-    for (int i = 0; i < size; i++)
-        printf("%d ", queue[i].value);
-    printf("\n");
-
+    if (size == 0) { 
+        printf("Queue is empty");
+    } else { 
+        printf("-----\nQueue: ");
+        for (int i = 0; i < size; i++)
+            printf("%d ", queue[i].value);
+        printf("\n");
+    }
     printf("Size: %d\n-----\n", size);
 }
 
@@ -67,17 +70,15 @@ int findCellByValue(cell *queue, int elem_value)
             return i;
     }
 
-    printf("Element not found...\n");
-
     return -1;
 }
 
-void insert(cell* queue, int value, int key) 
+void insert(cell* queue, int value, int key, QUEUE_ERR *err) 
 {
     cell elem = {value, key};
 
-    if (size + 1 > MAXSIZE)
-        printf("Queue is full...\n");
+    if (size + 1 > MAXSIZE) 
+        *err = FULL;
 
     queue[size++] = elem;
 
@@ -86,10 +87,10 @@ void insert(cell* queue, int value, int key)
     printf("> Element by key '%d' with value '%d' added to the queue.\n", elem.key, elem.value);
 }
 
-int extract_maximum(cell* queue) 
+int extract_maximum(cell* queue, QUEUE_ERR *err) 
 {
     if (size == 0) {
-        printf("Error: Queue is empty...\n");
+        *err = EMPTY;
         return -1;
     }
 
@@ -109,11 +110,11 @@ int extract_maximum(cell* queue)
     return value;
 }
 
-void deleteByValue(cell* queue, int elem_value) 
+void deleteByValue(cell* queue, int elem_value, QUEUE_ERR *err) 
 {
     if (size == 0) {
-        printf("Error: Queue is empty...\n");
-        return;
+        *err = EMPTY;
+        return -1;
     }
     if (size == 1) {
         --size;
@@ -121,19 +122,29 @@ void deleteByValue(cell* queue, int elem_value)
     }
 
     int elem_pos = findCellByValue(queue, elem_value);
-    if (elem_pos == -1) return;
+    if (elem_pos == -1) {
+        *err = NOTEXIST;
+        return;
+    }
 
     cell *pnt_elem = &queue[elem_pos - 1];
     swap(pnt_elem, &queue[--size]);
 
-    if (elem_pos == 1)
-        siftDown(queue, pnt_elem, elem_pos);
-    else if (pnt_elem[elem_pos / 2 - 1].key < pnt_elem -> key)
-        siftUp(queue, pnt_elem, elem_pos);
-    else
-        siftDown(queue, pnt_elem, elem_pos);
+    siftDown(queue, pnt_elem, elem_pos);
+    siftUp(queue, pnt_elem, elem_pos);
 
     printf("> Element with value '%d' has been removed from the queue.\n", elem_value);
     return;
+}
+
+int main() 
+{
+    QUEUE_ERR err = -1;
+    cell (*queue) = (cell*)malloc(sizeof(cell) * MAXSIZE);
+    
+    
+
+
+    return 0;
 }
 
