@@ -23,7 +23,36 @@ int main()
     
     show(queue, &err);
     
+    insert(queue, -1, 2, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_2.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_2.1\t->\tPASSED\n");
+
+    insert(queue, 2, 0, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_2.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_2.2\t->\tPASSED\n");
+
+    show(queue, &err);
     
+    int i;
+    for(i = 0; i <= MAXSIZE; i++) {
+        insert(queue, i, i, &err);
+    }
+    if (err != SUCCESS)
+        fprintf(stdout, "Test_3.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_3.1\t->\tPASSED\n");
+
+    insert(queue, 11, 11, &err);
+    if (err != FULL)
+        fprintf(stdout, "Test_3.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_3.2\t->\tPASSED\n");
+
+    show(queue, &err);
 
     return 0;
 }
