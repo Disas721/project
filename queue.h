@@ -29,6 +29,8 @@ int findCellByValue(cell *queue, int elem_value);
 
 void insert(cell* queue, int value, int key, QUEUE_ERR *err);
 
+void Remove_Queue(cell *queue, QUEUE_ERR *err);
+
 int extract_maximum(cell* queue, QUEUE_ERR *err);
 
 void deleteByValue(cell* queue, int elem_value, QUEUE_ERR *err);
