@@ -5,15 +5,25 @@
 const int MAXSIZE = 10;
 
 int main() 
-{
-    QUEUE_ERR err = -1;
-    cell (*queue) = (cell*)malloc(sizeof(cell) * MAXSIZE);
-    
-    
+{   
+    cell *queue = NULL;
+	QUEUE_ERR err;
 
+	queue = init_queue(-1, &err);
+	if (err != INVARG)
+		fprintf(stdout, "Test_1.1\t->\tFAILED\n");
+	else
+		fprintf(stdout, "Test_1.1\t->\tPASSED\n");
+
+	queue = init_queue(MAXSIZE, &err);
+	if (queue == NULL)
+		fprintf(stdout, "Test_1.2\t->\tFAILED\n");
+	else
+		fprintf(stdout, "Test_1.2\t->\tPASSED\n");
+    
+    show(queue, &err);
+    
+    
 
     return 0;
 }
-
-
-
