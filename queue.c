@@ -6,14 +6,57 @@
 const int MAXSIZE = 10;
 int size = 0;
 
+cell *init_queue(int ssize, QUEUE_ERR *err)
+{
+    if (ssize <= 0) {
+		fprintf(stderr, "Invalid argument: size\n");
+		if (err != NULL)
+			*err = INVARG;
+		return NULL;
+	}
+    
+    cell (*queue) = (cell*)malloc(sizeof(cell) * ssize);
+	if (queue == NULL) {
+		fprintf(stderr, "Not enough memory\n");
+		if (err != NULL)
+			*err = MALLOC;
+		return NULL;
+	}
+
+    *err = SUCCESS;
+    return queue;
+}
+
+void Remove_Queue(cell *queue, QUEUE_ERR *err) {
+
+    if (queue == NULL) {
+        fprintf(stderr, "Invalid argument: queue\n");
+        if(err != NULL) {
+            *err = INVARG;
+        }
+        return;
+    }
+    
+    size = 0;
+    free(queue);
+    *err = SUCCESS;
+}
+
 void swap(cell *elem1, cell *elem2) {
     cell temp = *elem1;
     *elem1 = *elem2;
     *elem2 = temp;
 }
 
-void show(cell *queue) 
+void show(cell *queue, QUEUE_ERR *err) 
 {
+    if (queue == NULL) {
+		fprintf(stderr, "Invalid argument: queue\n");
+		if (err != NULL)
+			*err = INVARG;
+		return;
+	}
+
     if (size == 0) { 
         printf("Queue is empty");
     } else { 
@@ -23,10 +66,13 @@ void show(cell *queue)
         printf("\n");
     }
     printf("Size: %d\n-----\n", size);
+    
+    *err = SUCCESS;
 }
 
 void siftUp(cell *queue, cell *elem, int elem_pos) 
 {
+    
     if (elem_pos == 1) return;
 
     int parent_pos = elem_pos / 2;
@@ -72,70 +118,4 @@ int findCellByValue(cell *queue, int elem_value)
 
     return -1;
 }
-
-void insert(cell* queue, int value, int key, QUEUE_ERR *err) 
-{
-    cell elem = {value, key};
-
-    if (size + 1 > MAXSIZE) 
-        *err = FULL;
-
-    queue[size++] = elem;
-
-    siftUp(queue, &queue[size - 1], size);
-
-    printf("> Element by key '%d' with value '%d' added to the queue.\n", elem.key, elem.value);
-}
-
-int extract_maximum(cell* queue, QUEUE_ERR *err) 
-{
-    if (size == 0) {
-        *err = EMPTY;
-        return -1;
-    }
-
-    int value = queue[0].value;
-    if (size == 1) {
-        size--;
-        return value;
-    }
-
-    cell *pnt_max = &queue[0];
-    cell *pnt_last_elem = &queue[size - 1];
-    swap(pnt_max, pnt_last_elem);
-    siftDown(queue, pnt_max, 1);
-
-    size--;
-
-    return value;
-}
-
-void deleteByValue(cell* queue, int elem_value, QUEUE_ERR *err) 
-{
-    if (size == 0) {
-        *err = EMPTY;
-        return -1;
-    }
-    if (size == 1) {
-        --size;
-        return;
-    }
-
-    int elem_pos = findCellByValue(queue, elem_value);
-    if (elem_pos == -1) {
-        *err = NOTEXIST;
-        return;
-    }
-
-    cell *pnt_elem = &queue[elem_pos - 1];
-    swap(pnt_elem, &queue[--size]);
-
-    siftDown(queue, pnt_elem, elem_pos);
-    siftUp(queue, pnt_elem, elem_pos);
-
-    printf("> Element with value '%d' has been removed from the queue.\n", elem_value);
-    return;
-}
-
-
 
