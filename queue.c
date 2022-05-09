@@ -119,3 +119,74 @@ int findCellByValue(cell *queue, int elem_value)
     return -1;
 }
 
+void insert(cell* queue, int value, int key, QUEUE_ERR *err) 
+{
+    if (queue == NULL) {
+		fprintf(stderr, "Invalid argument: queue\n");
+		if (err != NULL)
+			*err = INVARG;
+		return;
+	}
+
+    if (value <= 0) {
+		fprintf(stderr, "Invalid argument: value\n");
+		if (err != NULL)
+			*err = INVARG;
+		return;
+	}
+
+    if (key <= 0) {
+		fprintf(stderr, "Invalid argument: key\n");
+		if (err != NULL)
+			*err = INVARG;
+		return;
+	}
+
+    cell elem = {value, key};
+
+    if (size + 1 > MAXSIZE) {
+        fprintf(stderr, "Queue is full\n");
+		if (err != NULL)
+			*err = FULL;
+		return;
+    }
+
+    queue[size++] = elem;
+
+    siftUp(queue, &queue[size - 1], size);
+
+    printf("> Element by key '%d' with value '%d' added to the queue.\n", elem.key, elem.value);
+
+    *err = SUCCESS;
+}
+
+int extract_maximum(cell* queue, QUEUE_ERR *err) 
+{
+    if (queue == NULL) {
+		fprintf(stderr, "Invalid argument: queue\n");
+		if (err != NULL)
+			*err = INVARG;
+		return -1;
+	}
+
+    if (size == 0) {
+        fprintf(stderr, "Queue is empty\n");
+        *err = EMPTY;
+        return -1;
+    }
+
+    int value = queue[0].value;
+    if (size == 1) {
+        size--;
+        return value;
+    }
+
+    cell *pnt_max = &queue[0];
+    cell *pnt_last_elem = &queue[--size];
+    swap(pnt_max, pnt_last_elem);
+    siftDown(queue, pnt_max, 1);
+    
+    *err = SUCCESS;
+
+    return value;
+}
