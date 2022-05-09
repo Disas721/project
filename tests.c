@@ -4,6 +4,11 @@
 
 const int MAXSIZE = 10;
 
+
+
+
+
+
 int main() 
 {   
     cell *queue = NULL;
@@ -51,6 +56,69 @@ int main()
         fprintf(stdout, "Test_3.2\t->\tFAILED\n");
     else
         fprintf(stdout, "Test_3.2\t->\tPASSED\n");
+
+    show(queue, &err);
+
+    extract_maximum(NULL, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_4.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_4.1\t->\tPASSED\n");
+
+    for(i = 1; i<= MAXSIZE; i++) { 
+        printf("extract_max_%d", i);
+        printf("max = %d\n", extract_maximum(queue, &err));
+    }
+    if (err != SUCCESS)
+            fprintf(stdout, "Test_4.2\t->\tFAILED\n");
+        else
+            fprintf(stdout, "Test_4.2\t->\tPASSED\n");
+    show(queue, &err);
+
+    for(i = 1; i <= MAXSIZE; i++) {
+        insert(queue, i, i, &err);
+    }
+    show(queue, &err);
+
+    deleteByValue(NULL, 4, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_5.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_5.1\t->\tPASSED\n");
+    
+    show(queue, &err);
+
+    for (i = 1; i <= MAXSIZE; i++) {
+        deleteByValue(queue, i, &err);
+    }
+    if (err != SUCCESS)
+        fprintf(stdout, "Test_5.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_5.1\t->\tPASSED\n");
+
+    deleteByValue(queue, 1, &err);
+    if (err != EMPTY)
+        fprintf(stdout, "Test_5.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_5.2\t->\tPASSED\n");
+
+    for(i = 1; i <= MAXSIZE; i++) {
+        insert(queue, i, i, &err);
+    }
+    show(queue, &err);
+
+    Remove_Queue(NULL, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_6.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_6.1\t->\tPASSED\n");
+
+
+    Remove_Queue(queue, &err);
+    if (err != SUCCESS)
+        fprintf(stdout, "Test_6.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_6.2\t->\tPASSED\n");
 
     show(queue, &err);
 
