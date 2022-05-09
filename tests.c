@@ -2,12 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const int MAXSIZE = 10;
-
-
-
-
-
+const int MAXSIZE1 = 10;
 
 int main() 
 {   
@@ -20,7 +15,7 @@ int main()
 	else
 		fprintf(stdout, "Test_1.1\t->\tPASSED\n");
 
-	queue = init_queue(MAXSIZE, &err);
+	queue = init_queue(MAXSIZE1, &err);
 	if (queue == NULL)
 		fprintf(stdout, "Test_1.2\t->\tFAILED\n");
 	else
@@ -43,7 +38,7 @@ int main()
     show(queue, &err);
     
     int i;
-    for(i = 0; i <= MAXSIZE; i++) {
+    for(i = 0; i <= MAXSIZE1; i++) {
         insert(queue, i, i, &err);
     }
     if (err != SUCCESS)
@@ -65,7 +60,7 @@ int main()
     else
         fprintf(stdout, "Test_4.1\t->\tPASSED\n");
 
-    for(i = 1; i<= MAXSIZE; i++) { 
+    for(i = 1; i<= MAXSIZE1; i++) { 
         printf("extract_max_%d", i);
         printf("max = %d\n", extract_maximum(queue, &err));
     }
@@ -75,7 +70,7 @@ int main()
             fprintf(stdout, "Test_4.2\t->\tPASSED\n");
     show(queue, &err);
 
-    for(i = 1; i <= MAXSIZE; i++) {
+    for(i = 1; i <= MAXSIZE1; i++) {
         insert(queue, i, i, &err);
     }
     show(queue, &err);
@@ -88,7 +83,7 @@ int main()
     
     show(queue, &err);
 
-    for (i = 1; i <= MAXSIZE; i++) {
+    for (i = 1; i <= MAXSIZE1; i++) {
         deleteByValue(queue, i, &err);
     }
     if (err != SUCCESS)
@@ -102,7 +97,7 @@ int main()
     else
         fprintf(stdout, "Test_5.2\t->\tPASSED\n");
 
-    for(i = 1; i <= MAXSIZE; i++) {
+    for(i = 1; i <= MAXSIZE1; i++) {
         insert(queue, i, i, &err);
     }
     show(queue, &err);
