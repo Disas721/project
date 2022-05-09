@@ -4,7 +4,7 @@ CFLAGS= -Wall -g -fprofile-arcs -ftest-coverage
 all: tests
 tests.o: tests.c
 	${CC} -c tests.c -o tests.o ${CFLAGS}
-stack.o: queue.c
+queue.o: queue.c
 	${CC} -c queue.c -o queue.o ${CFLAGS}
 tests: tests.o queue.o
 	${CC} queue.o tests.o -o tests ${CFLAGS}
