@@ -160,3 +160,73 @@ void insert(cell* queue, int value, int key, QUEUE_ERR *err)
     *err = SUCCESS;
 }
 
+
+int extract_maximum(cell* queue, QUEUE_ERR *err) 
+{
+    if (queue == NULL) {
+		fprintf(stderr, "Invalid argument: queue\n");
+		if (err != NULL)
+			*err = INVARG;
+		return -1;
+	}
+
+    if (size == 0) {
+        fprintf(stderr, "Queue is empty\n");
+        *err = EMPTY;
+        return -1;
+    }
+
+    int value = queue[0].value;
+    if (size == 1) {
+        size--;
+        return value;
+    }
+
+    cell *pnt_max = &queue[0];
+    cell *pnt_last_elem = &queue[--size];
+    swap(pnt_max, pnt_last_elem);
+    siftDown(queue, pnt_max, 1);
+    
+    *err = SUCCESS;
+
+    return value;
+}
+
+void deleteByValue(cell* queue, int elem_value, QUEUE_ERR *err) 
+{
+    if (queue == NULL) {
+		fprintf(stderr, "Invalid argument: queue\n");
+		if (err != NULL)
+			*err = INVARG;
+		return;
+	}
+
+    if (size == 0) {
+        fprintf(stderr, "Queue is empty\n");
+        *err = EMPTY;
+        return;
+    }
+    if (size == 1) {
+        --size;
+        return;
+    }
+
+    int elem_pos = findCellByValue(queue, elem_value);
+    if (elem_pos == -1) {
+        *err = NOTEXIST;
+        return;
+    }
+
+    cell *pnt_elem = &queue[elem_pos - 1];
+    swap(pnt_elem, &queue[--size]);
+
+    siftDown(queue, pnt_elem, elem_pos);
+    siftUp(queue, pnt_elem, elem_pos);
+
+    printf("> Element with value '%d' has been removed from the queue.\n", elem_value);
+
+    *err = SUCCESS;
+
+    return;
+}
+
