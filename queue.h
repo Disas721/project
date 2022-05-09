@@ -10,12 +10,16 @@ typedef enum {
     EMPTY,
     FULL,
     NOTEXIST,
-    INVARG
+    INVARG, 
+    SUCCESS,
+    MALLOC
 } QUEUE_ERR;
+
+cell *init_queue(int size, QUEUE_ERR *err);
 
 void swap(cell *elem1, cell *elem2);
 
-void show(cell *queue);
+void show(cell *queue, QUEUE_ERR *err);
 
 void siftUp(cell *queue, cell *elem, int elem_pos);
 
