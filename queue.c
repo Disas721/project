@@ -160,33 +160,3 @@ void insert(cell* queue, int value, int key, QUEUE_ERR *err)
     *err = SUCCESS;
 }
 
-int extract_maximum(cell* queue, QUEUE_ERR *err) 
-{
-    if (queue == NULL) {
-		fprintf(stderr, "Invalid argument: queue\n");
-		if (err != NULL)
-			*err = INVARG;
-		return -1;
-	}
-
-    if (size == 0) {
-        fprintf(stderr, "Queue is empty\n");
-        *err = EMPTY;
-        return -1;
-    }
-
-    int value = queue[0].value;
-    if (size == 1) {
-        size--;
-        return value;
-    }
-
-    cell *pnt_max = &queue[0];
-    cell *pnt_last_elem = &queue[--size];
-    swap(pnt_max, pnt_last_elem);
-    siftDown(queue, pnt_max, 1);
-    
-    *err = SUCCESS;
-
-    return value;
-}
