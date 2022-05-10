@@ -22,6 +22,12 @@ int main()
 		fprintf(stdout, "Test_1.2\t->\tPASSED\n");
     
     show(queue, &err);
+
+    insert(NULL, 2, 2, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_2.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_2.2\t->\tPASSED\n");
     
     insert(queue, -1, 2, &err);
     if (err != INVARG)
@@ -34,8 +40,6 @@ int main()
         fprintf(stdout, "Test_2.2\t->\tFAILED\n");
     else
         fprintf(stdout, "Test_2.2\t->\tPASSED\n");
-
-    show(queue, &err);
     
     int i;
     for(i = 0; i <= MAXSIZE1; i++) {
@@ -53,21 +57,37 @@ int main()
         fprintf(stdout, "Test_3.2\t->\tPASSED\n");
 
     show(queue, &err);
-
-    extract_maximum(NULL, &err);
-    if (err != INVARG)
+    if (err != SUCCESS)
         fprintf(stdout, "Test_4.1\t->\tFAILED\n");
     else
         fprintf(stdout, "Test_4.1\t->\tPASSED\n");
+    
+    show(NULL, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_4.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_4.2\t->\tPASSED\n");
+
+    extract_maximum(NULL, &err);
+    if (err != INVARG)
+        fprintf(stdout, "Test_5.1\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_5.1\t->\tPASSED\n");
 
     for(i = 1; i<= MAXSIZE1; i++) { 
         printf("extract_max_%d", i);
         printf("max = %d\n", extract_maximum(queue, &err));
     }
     if (err != SUCCESS)
-            fprintf(stdout, "Test_4.2\t->\tFAILED\n");
+            fprintf(stdout, "Test_5.2\t->\tFAILED\n");
         else
-            fprintf(stdout, "Test_4.2\t->\tPASSED\n");
+            fprintf(stdout, "Test_5.2\t->\tPASSED\n");
+
+    extract_maximum(queue, &err);
+    if (err != EMPTY)
+        fprintf(stdout, "Test_5.3\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_5.3\t->\tPASSED\n");
     show(queue, &err);
 
     for(i = 1; i <= MAXSIZE1; i++) {
@@ -77,25 +97,31 @@ int main()
 
     deleteByValue(NULL, 4, &err);
     if (err != INVARG)
-        fprintf(stdout, "Test_5.1\t->\tFAILED\n");
+        fprintf(stdout, "Test_6.1\t->\tFAILED\n");
     else
-        fprintf(stdout, "Test_5.1\t->\tPASSED\n");
+        fprintf(stdout, "Test_6.1\t->\tPASSED\n");
     
     show(queue, &err);
+
+    deleteByValue(queue, 20, &err);
+    if (err != NOTEXIST)
+        fprintf(stdout, "Test_6.2\t->\tFAILED\n");
+    else
+        fprintf(stdout, "Test_6.2\t->\tPASSED\n");
 
     for (i = 1; i <= MAXSIZE1; i++) {
         deleteByValue(queue, i, &err);
     }
     if (err != SUCCESS)
-        fprintf(stdout, "Test_5.1\t->\tFAILED\n");
+        fprintf(stdout, "Test_6.3\t->\tFAILED\n");
     else
-        fprintf(stdout, "Test_5.1\t->\tPASSED\n");
+        fprintf(stdout, "Test_6.3\t->\tPASSED\n");
 
     deleteByValue(queue, 1, &err);
     if (err != EMPTY)
-        fprintf(stdout, "Test_5.2\t->\tFAILED\n");
+        fprintf(stdout, "Test_6.4\t->\tFAILED\n");
     else
-        fprintf(stdout, "Test_5.2\t->\tPASSED\n");
+        fprintf(stdout, "Test_6.4\t->\tPASSED\n");
 
     for(i = 1; i <= MAXSIZE1; i++) {
         insert(queue, i, i, &err);
@@ -104,16 +130,15 @@ int main()
 
     Remove_Queue(NULL, &err);
     if (err != INVARG)
-        fprintf(stdout, "Test_6.1\t->\tFAILED\n");
+        fprintf(stdout, "Test_7.1\t->\tFAILED\n");
     else
-        fprintf(stdout, "Test_6.1\t->\tPASSED\n");
-
+        fprintf(stdout, "Test_7.1\t->\tPASSED\n");
 
     Remove_Queue(queue, &err);
     if (err != SUCCESS)
-        fprintf(stdout, "Test_6.2\t->\tFAILED\n");
+        fprintf(stdout, "Test_7.2\t->\tFAILED\n");
     else
-        fprintf(stdout, "Test_6.2\t->\tPASSED\n");
+        fprintf(stdout, "Test_7.2\t->\tPASSED\n");
 
     show(queue, &err);
 
