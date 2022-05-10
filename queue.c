@@ -213,6 +213,7 @@ void deleteByValue(cell* queue, int elem_value, QUEUE_ERR *err)
 
     int elem_pos = findCellByValue(queue, elem_value);
     if (elem_pos == -1) {
+        fprintf(stderr, "Element not exist\n");
         *err = NOTEXIST;
         return;
     }
