@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-const int MAXSIZE = 10;
+
 int size = 0;
+const int MAXSIZE = 10;
 
 cell *init_queue(int ssize, QUEUE_ERR *err)
 {
